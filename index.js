@@ -129,12 +129,12 @@ function addInternCard(data, i) {
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">${data[i].name}</h5>
-            <div class="card-subtitle mb-2 text-muted">${data[0].role}</div>
+            <div class="card-subtitle mb-2 text-muted">${data[i].role}</div>
         </div>
     <ul class="list-group list-group-flush">
-        <li class="list-group-item">ID: ${data[0].id}</li>
-        <li class="list-group-item">Email: ${data[0].email}</li>
-        <li class="list-group-item">School: ${data[0].school}</li>
+        <li class="list-group-item">ID: ${data[i].id}</li>
+        <li class="list-group-item">Email: ${data[i].email}</li>
+        <li class="list-group-item">School: ${data[i].school}</li>
     </ul>
     </div>
     `;

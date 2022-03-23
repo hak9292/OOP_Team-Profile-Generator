@@ -1,11 +1,9 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-const htmlWrite = require('./lib/writeToHTML');
-const Employee = require('./lib/Employee');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
-const appendEngineer = require('./lib/writeToHTML');
+
 const team = [];
 
 const employeeQuestions = [
@@ -89,8 +87,59 @@ function createHTML() {
         <div class="card-group">
 
     `;
-
 }
+
+function addManagerCard(data) {
+    return`
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">${data[0].name}</h5>
+            <div class="card-subtitle mb-2 text-muted">${data[0].role}</div>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">ID: ${data[0].id}</li>
+            <li class="list-group-item">Email: ${data[0].email}</li>
+            <li class="list-group-item">Office number: ${data[0].officeNumber}</li>
+        </ul>
+    </div>
+</div >
+</body >
+</html >
+`;
+}
+
+function addEngineerCard(data, i) {
+    return `
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">${data[i].name}</h5>
+            <div class="card-subtitle mb-2 text-muted">${data[i].role}</div>
+        </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">ID: ${data[i].id}</li>
+        <li class="list-group-item">Email: ${data[i].email}</li>
+        <li class="list-group-item">GitHub: ${data[i].github}</li>
+    </ul>
+    </div>
+    `;
+}
+
+function addInternCard(data, i) {
+    return `
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title">${data[i].name}</h5>
+            <div class="card-subtitle mb-2 text-muted">${data[0].role}</div>
+        </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">ID: ${data[0].id}</li>
+        <li class="list-group-item">Email: ${data[0].email}</li>
+        <li class="list-group-item">School: ${data[0].school}</li>
+    </ul>
+    </div>
+    `;
+}
+
 function addEmployees() {
     inquirer
         .prompt(addEmployeeQuestion)
@@ -104,12 +153,15 @@ function addEmployees() {
                     break;
                 default:
                     // createHTML('index.html', generateHTML());
-                    for (i = 1; i < team.length; i ++) {
+                    for (i = 1; i < team.length; i++) {
                         if (team[i].role === 'engineer') {
-                            appendToFile('index.html', appendEngineer(team))
+                            appendToFile('index.html', addEngineerCard(team, i));
+                        }
+                        if (team[i].role === 'intern') {
+                            appendToFile('index.html', addInternCard(team, i));
                         }
                     }
-                    appendToFile('index.html', htmlWrite(team));
+                    appendToFile('index.html', addManagerCard(team));
             }
         })
 }

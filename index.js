@@ -5,6 +5,7 @@ const Employee = require('./lib/Employee');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const appendEngineer = require('./lib/writeToHTML');
 const team = [];
 
 const employeeQuestions = [
@@ -81,7 +82,9 @@ function createHTML() {
         <link rel="stylesheet" href="./style.css">
         <title>Team Generator</title>
     </head>
-    
+    <header>
+        <h1>My Team</h1>
+    </header>
     <body>
         <div class="card-group">
 
@@ -101,6 +104,11 @@ function addEmployees() {
                     break;
                 default:
                     // createHTML('index.html', generateHTML());
+                    for (i = 1; i < team.length; i ++) {
+                        if (team[i].role === 'engineer') {
+                            appendToFile('index.html', appendEngineer(team))
+                        }
+                    }
                     appendToFile('index.html', htmlWrite(team));
             }
         })

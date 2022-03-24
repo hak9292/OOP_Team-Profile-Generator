@@ -1,41 +1,42 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-const Manager = require('./lib/Manager');
-const Engineer = require('./lib/Engineer');
-const Intern = require('./lib/Intern');
-
+const Manager = require('./lib/manager');
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern');
+var currentEmployee = 'employee';
 const team = [];
+
 
 const employeeQuestions = [
     {
         name: 'name',
-        message: "What is the employee's name?"
+        message: `What is the ${currentEmployee}'s name?`
     },
     {
         name: 'id',
-        message: "What is the employee's employee ID?"
+        message: `What is the ${currentEmployee}'s employee ID?`
     },
     {
         name: 'email',
-        message: "What is the employee's email address?"
+        message: `What is the ${currentEmployee}'s email address?`
     }
 ]
 const managerVariant = [
     {
         name: 'officeNumber',
-        message: "What is the employee's office number?"
+        message: `What is the ${currentEmployee}'s office number?`
     }
 ]
 const engineerVariant = [
     {
         name: 'github',
-        message: "What is the employee's github username?"
+        message: `What is the ${currentEmployee}'s github username?`
     }
 ]
 const internVariant = [
     {
         name: 'school',
-        message: "What school does the employee currently attend?"
+        message: `What school does the ${currentEmployee} currently attend?`
     }
 ]
 const addEmployeeQuestion = [
@@ -55,7 +56,7 @@ const managerQuestions = employeeQuestions.concat(managerVariant);
 const engineerQuestions = employeeQuestions.concat(engineerVariant);
 const internQuestions = employeeQuestions.concat(internVariant);
 
-function init(role) {
+function init() {
     inquirer
         .prompt(managerQuestions)
         .then((answers) => {
@@ -94,7 +95,7 @@ function addManagerCard(data) {
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">${data[0].name}</h5>
-            <div class="card-subtitle mb-2 text-muted">${data[0].role}</div>
+            <div class="card-subtitle mb-2 text-muted">${data[0].constructor.name}</div>
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">ID: ${data[0].id}</li>
@@ -113,7 +114,7 @@ function addEngineerCard(data, i) {
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">${data[i].name}</h5>
-            <div class="card-subtitle mb-2 text-muted">${data[i].role}</div>
+            <div class="card-subtitle mb-2 text-muted">${data[i].constructor.name}</div>
         </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">ID: ${data[i].id}</li>
@@ -129,7 +130,7 @@ function addInternCard(data, i) {
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">${data[i].name}</h5>
-            <div class="card-subtitle mb-2 text-muted">${data[i].role}</div>
+            <div class="card-subtitle mb-2 text-muted">${data[i].constructor.name}</div>
         </div>
     <ul class="list-group list-group-flush">
         <li class="list-group-item">ID: ${data[i].id}</li>
@@ -154,10 +155,10 @@ function addEmployees() {
                 default:
                     // createHTML('index.html', generateHTML());
                     for (i = 1; i < team.length; i++) {
-                        if (team[i].role === 'engineer') {
+                        if (team[i].constructor.name === 'Engineer') {
                             appendToFile('index.html', addEngineerCard(team, i));
                         }
-                        if (team[i].role === 'intern') {
+                        if (team[i].constructor.name === 'Intern') {
                             appendToFile('index.html', addInternCard(team, i));
                         }
                     }
@@ -166,31 +167,7 @@ function addEmployees() {
         })
 }
 
-// function generateHTML(data) {
-//     return `
-//     <!DOCTYPE html>
-// <html lang="en">
-
-// <head>
-//     <meta charset="UTF-8">
-//     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//     <link rel="stylesheet" href="./reset.css">
-//     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-//     <link rel="stylesheet" href="./style.css">
-//     <title>Team Generator</title>
-// </head>
-
-// <body>
-//     <div class="card-group">
-//     </div>
-// </body>
-
-// </html>
-//     `;
-// }
-function addEngineer(currentEmployee) {
-    currentEmployee = 'engineer';
+function addEngineer() {
     inquirer
         .prompt(engineerQuestions)
         .then((answers) => {
@@ -201,7 +178,6 @@ function addEngineer(currentEmployee) {
 }
 
 function addIntern() {
-    currentEmployee = 'intern';
     inquirer
         .prompt(internQuestions)
         .then((answers) => {

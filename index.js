@@ -3,11 +3,11 @@ const inquirer = require('inquirer');
 const Manager = require('./lib/manager');
 const Engineer = require('./lib/engineer');
 const Intern = require('./lib/intern');
-var currentEmployee = 'employee';
+let currentEmployee = 'employee';
 const team = [];
 
 
-const employeeQuestions = [
+let employeeQuestions = [
     {
         name: 'name',
         message: `What is the ${currentEmployee}'s name?`
@@ -21,25 +21,25 @@ const employeeQuestions = [
         message: `What is the ${currentEmployee}'s email address?`
     }
 ]
-const managerVariant = [
+let managerVariant = [
     {
         name: 'officeNumber',
         message: `What is the ${currentEmployee}'s office number?`
     }
 ]
-const engineerVariant = [
+let engineerVariant = [
     {
         name: 'github',
         message: `What is the ${currentEmployee}'s github username?`
     }
 ]
-const internVariant = [
+let internVariant = [
     {
         name: 'school',
         message: `What school does the ${currentEmployee} currently attend?`
     }
 ]
-const addEmployeeQuestion = [
+let addEmployeeQuestion = [
     {
         type: 'list',
         name: 'add',
@@ -52,11 +52,12 @@ const addEmployeeQuestion = [
         ]
     }
 ]
-const managerQuestions = employeeQuestions.concat(managerVariant);
-const engineerQuestions = employeeQuestions.concat(engineerVariant);
-const internQuestions = employeeQuestions.concat(internVariant);
+let managerQuestions = employeeQuestions.concat(managerVariant);
+let engineerQuestions = employeeQuestions.concat(engineerVariant);
+let internQuestions = employeeQuestions.concat(internVariant);
 
 function init() {
+    currentEmployee = 'Manager';
     inquirer
         .prompt(managerQuestions)
         .then((answers) => {
